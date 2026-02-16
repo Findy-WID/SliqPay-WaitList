@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   ArrowRight, 
   ShieldCheck, 
-  Zap, 
-  Globe, 
+  Zap,  
   Users,
   CheckCircle2,
   Lock
