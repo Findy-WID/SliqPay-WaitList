@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useWeb3Forms from '@web3forms/react';
 import { motion } from 'framer-motion';
 import logo from "./assets/logo.png";
 import { 
@@ -54,11 +55,10 @@ const brandColors: BrandColors = {
   accentPurple: '#8b5cf6',
 };
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwfJEVcoA6f-Ah4QRg5uvQ7--oIGE__ng4X_D00pSGFbZrzk25NMlvth44aqAiSd2o-/exec';
-
 const SliqPayWaitlist: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [name, setName] = useState<string>('');
+  const [number, setNumber] = useState<string>('')
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [waitlistCount, setWaitlistCount] = useState<number>(1240);
@@ -76,47 +76,42 @@ const SliqPayWaitlist: React.FC = () => {
   //   return () => clearInterval(interval);
   // }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setIsLoading(true);
-  setError('');
+//   
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    // Initialize the Web3Forms submit function
   
-  // Create form data
-  const formData = new URLSearchParams();
-  formData.append('email', email);
-  formData.append('name', name);
-  formData.append('timestamp', new Date().toISOString());
-  formData.append('source', 'website');
-  
-  try {
-    const response = await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+    const { submit: sendToWeb3Forms } = useWeb3Forms({
+        access_key: 'e262bd61-80ec-4c7e-9f84-d6de4e96a2e6', 
+        onSuccess: (message, data) => {
+            console.log("Success!", message, data);
+            setIsSubmitted(true);
+            setEmail(''); // Clear the email field
+            setName('');  // Clear the name field
+            setNumber('');
+            setIsLoading(false);
+        },
+        onError: (message, data) => {
+            console.error("Error!", message, data);
+            setError('Submission failed. Please try again.');
+            setIsLoading(false);
+        }
     });
-    
-    const text = await response.text();
-    
-    try {
-      const data = JSON.parse(text);
-      if (data.status === 'duplicate') {
-        setError('This email is already on the waitlist!');
-      } else if (data.status === 'success') {
-        setIsSubmitted(true);
-      }
-    } catch (e) {
-      // If response isn't JSON, assume success
-      setIsSubmitted(true);
-    }
-    
-  } catch (err) {
-    setError('Something went wrong. Please try again.');
-    console.error('Submission error:', err);
-  } finally {
-    setIsLoading(false);
-  }
+
+    // Prepare the data from your form state
+    const formData = {
+        email: email,
+        name: name,
+        number: number
+        // source: "SliqPay Waitlist"
+    };
+
+    // Send the data
+    sendToWeb3Forms(formData);
 };
 
 // Fetch real data when component mounts
@@ -250,11 +245,11 @@ const SliqPayWaitlist: React.FC = () => {
               onSubmit={handleSubmit} 
               className="space-y-4 max-w-md"
             >
-              <div className="relative flex-grow">
+              <div className="relative flex-grow space-y-3">
                 <input 
                   type="text"
                   placeholder="Your name (optional)"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:ring-2 transition-all mb-3"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:ring-2 transition-all"
                   style={{ '--tw-ring-color': brandColors.primaryGreen } as React.CSSProperties}
                   value={name}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
@@ -267,6 +262,15 @@ const SliqPayWaitlist: React.FC = () => {
                   style={{ '--tw-ring-color': brandColors.primaryGreen } as React.CSSProperties}
                   value={email}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                />
+                <input 
+                  type="tel" 
+                  required
+                  placeholder="Enter your phone" 
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:ring-2 transition-all"
+                  style={{ '--tw-ring-color': brandColors.primaryGreen } as React.CSSProperties}
+                  value={number}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNumber(e.target.value)}
                 />
               </div>
               

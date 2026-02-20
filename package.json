@@ -8,11 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "netlify-dev": "netlify dev" 
+    "netlify-dev": "netlify dev"
   },
   "dependencies": {
     "@netlify/functions": "^5.1.2",
     "@tailwindcss/vite": "^4.1.18",
+    "@web3forms/react": "^1.1.3",
     "axios": "^1.13.5",
     "cors": "^2.8.6",
     "express": "^5.2.1",
