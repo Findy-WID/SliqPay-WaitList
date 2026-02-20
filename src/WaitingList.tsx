@@ -174,9 +174,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
             className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ backgroundColor: brandColors.primaryGreen }}
           >
-            <img src={logo} alt="SliqPay Logo" className="h-8 w-auto" />
+            <img src={logo} alt="SliqPay Logo" className="h-10 w-auto" />
           </motion.div>
           <span className="text-2xl font-bold tracking-tight">SliqPay</span>
         </motion.div>
@@ -521,7 +520,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             {/* Brand Column */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center">
                   <img src={logo} alt="SliqPay" className="h-5 w-auto" />
                 </div>
                 <span className="text-xl font-bold">SliqPay</span>
