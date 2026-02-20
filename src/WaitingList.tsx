@@ -365,7 +365,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               
               {/* Background Image (herosliq1 - Map of Africa) */}
               <img 
-                src="/herosliq1.png" 
+                src="/herosliq1.jpeg" 
                 alt="Africa payment flow" 
                 className="absolute inset-0 w-full h-full object-cover opacity-80"
               />
