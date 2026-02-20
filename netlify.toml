@@ -1,0 +1,22 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+  functions = "netlify/functions"
+
+[dev]
+  framework = "#custom"
+  command = "npm run start"
+  targetPort = 3000
+  port = 8888
+  publish = "build"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[functions]
+  external_node_modules = ["express", "mongoose", "express-rate-limit", "helmet", "express-validator", "cors"]
+  node_bundler = "esbuild"
