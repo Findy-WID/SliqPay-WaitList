@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import herosliq1 from "./assets/herosliq1.png";
-import herosliq2 from "./assets/herosliq2.png";
 import axios from 'axios';
 import logo from "./assets/logo.png";
 import { 
@@ -64,20 +63,20 @@ const SliqPayWaitlist: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [waitlistCount, setWaitlistCount] = useState<number>(1240);
+  // const [waitlistCount, setWaitlistCount] = useState<number>(1240);
   const [error, setError] = useState<string>('');
-  const [stats, setStats] = useState({
-    waitlistCount: 0,
-    countries: 1
-  });
+  // const [stats, setStats] = useState({
+  //   waitlistCount: 0,
+  //   countries: 1
+  // });
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWaitlistCount(prev => prev + Math.floor(Math.random() * 3));
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setWaitlistCount(prev => prev + Math.floor(Math.random() * 3));
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
@@ -110,24 +109,24 @@ const SliqPayWaitlist: React.FC = () => {
 };
 
 // Fetch real data when component mounts
-useEffect(() => {
-  const fetchStats = async () => {
-    try {
-      // You'll need to create a simple API to get count
-      // For now, let's just get the count from your sheet
-      const response = await fetch('https://script.google.com/macros/s/AKfycbwfJEVcoA6f-Ah4QRg5uvQ7--oIGE__ng4X_D00pSGFbZrzk25NMlvth44aqAiSd2o-/exec?action=count');
-      const data = await response.json();
-      setStats(prev => ({
-        ...prev,
-        waitlistCount: data.count || 0
-      }));
-    } catch (error) {
-      console.error('Failed to fetch stats:', error);
-    }
-  };
+// useEffect(() => {
+//   const fetchStats = async () => {
+//     try {
+//       // You'll need to create a simple API to get count
+//       // For now, let's just get the count from your sheet
+//       const response = await fetch('https://script.google.com/macros/s/AKfycbwfJEVcoA6f-Ah4QRg5uvQ7--oIGE__ng4X_D00pSGFbZrzk25NMlvth44aqAiSd2o-/exec?action=count');
+//       const data = await response.json();
+//       setStats(prev => ({
+//         ...prev,
+//         waitlistCount: data.count || 0
+//       }));
+//     } catch (error) {
+//       console.error('Failed to fetch stats:', error);
+//     }
+//   };
   
-  fetchStats();
-}, []);
+//   fetchStats();
+// }, []);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
