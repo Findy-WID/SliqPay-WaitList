@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
 import logo from "./assets/logo.png";
 import { 
   ArrowRight, 
@@ -82,23 +81,36 @@ const SliqPayWaitlist: React.FC = () => {
   setIsLoading(true);
   setError('');
   
+  // Create form data
+  const formData = new URLSearchParams();
+  formData.append('email', email);
+  formData.append('name', name);
+  formData.append('timestamp', new Date().toISOString());
+  formData.append('source', 'website');
+  
   try {
-    const response = await axios.post(APPS_SCRIPT_URL, {
-      email: email,
-      name: name,  // Make sure you have this state
-      timestamp: new Date().toISOString(),
-      source: 'website'
-    }, {
+    const response = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: formData,
       headers: {
-        'Content-Type': 'application/json',
-      }
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     });
-
-    if (response.data.status === 'duplicate') {
-      setError('This email is already on the waitlist!');
-    } else if (response.data.status === 'success') {
+    
+    const text = await response.text();
+    
+    try {
+      const data = JSON.parse(text);
+      if (data.status === 'duplicate') {
+        setError('This email is already on the waitlist!');
+      } else if (data.status === 'success') {
+        setIsSubmitted(true);
+      }
+    } catch (e) {
+      // If response isn't JSON, assume success
       setIsSubmitted(true);
     }
+    
   } catch (err) {
     setError('Something went wrong. Please try again.');
     console.error('Submission error:', err);
