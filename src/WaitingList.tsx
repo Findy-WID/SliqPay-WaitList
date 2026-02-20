@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import herosliq1 from "./assets/herosliq1.png";
 import axios from 'axios';
 import logo from "./assets/logo.png";
 import { 
@@ -351,7 +350,7 @@ const SliqPayWaitlist: React.FC = () => {
               
               {/* Background Image (herosliq1 - Map of Africa) */}
               <img 
-                src={herosliq1} 
+                src="/herosliq1.png" 
                 alt="Africa payment flow" 
                 className="absolute inset-0 w-full h-full object-cover opacity-80"
               />
