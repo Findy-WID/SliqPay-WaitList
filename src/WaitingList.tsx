@@ -501,7 +501,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 animate={{ scale: 1 }}
                 className="text-emerald-400 text-xl"
               >
-                🎉 Thanks for joining! Check your email.
+                🎉 Thanks for joining! We will keep you updated.
               </motion.div>
             )}
           </motion.div>
